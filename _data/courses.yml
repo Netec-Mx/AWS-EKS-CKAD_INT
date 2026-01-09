@@ -1,0 +1,132 @@
+# Archivo de definición de cursos
+# _data/courses.yml
+aws-eks-ckad-int:
+  title: "Amazon EKS: Resiliencia, Escalabilidad y Operación Sustentable" # COLOCAR EL NOMBRE DEL CURSO
+  intro: "DESCRIPCIÓN_DEL_CURSO_AQUI"
+  labs:
+
+    - id: lab1 
+      title: "Actualización de un clúster EKS y nodos administrados"
+      url:  "/lab1/lab1/"
+      duration: "60 min"
+      desc: "Actualizar EKS (control plane, nodegroup y add-ons) sin downtime usando canario, PDB, probes, rollouts y validaciones."
+
+    - id: lab2 
+      title: "Implementación de ArgoCD en EKS con un despliegue GitOps"
+      url:  "/lab2/lab2/"
+      duration: "75 min"
+      desc: "Implementa GitOps en EKS con ArgoCD: Kustomize (dev), auto-sync, prune/self-heal; despliegue por commit y drift repair."
+
+    - id: lab3 
+      title: "Identificación y corrección de anti-patrones en un clúster EKS"
+      url:  "/lab3/lab3/"
+      duration: "60 min"
+      desc: "Simula anti-patrones en EKS y corrígelos con kubectl (events/logs/describe), aplicando buenas prácticas y enfoque CKAD."
+
+    - id: lab4 
+      title: "Configuración de TLS en un ALB de EKS"
+      url:  "/lab4/lab4/"
+      duration: "55 min"
+      desc: "Configura HTTPS en ALB desde EKS con ACM: redirect 80→443, política TLS recomendada y validación en Kubernetes y AWS."
+
+    - id: lab5 
+      title: "Configuración de probes en Pods y validación de comportamiento"
+      url:  "/lab5/lab5/"
+      duration: "50 min"
+      desc: "Configura y ajusta liveness/readiness/startup probes en EKS, provocando reinicios y exclusión de endpoints, y valida con kubectl."
+
+    - id: lab6 
+      title: "Simulación de fallos con Chaos Mesh en EKS"
+      url:  "/lab6/lab6/"
+      duration: "60 min"
+      desc: "Ejecuta chaos engineering en EKS con Chaos Mesh (pod kill, latencia y stress), midiendo impacto y recovery con kubectl y scoping."
+
+    - id: lab7 
+      title: "Configuración de escalado de nodos con Karpenter"
+      url:  "/lab7/lab7/"
+      duration: "50 min"
+      desc: "Configura Karpenter en EKS para auto scale-up/scale-down basado en Pods Pending, usando NodePool/EC2NodeClass y validación CKAD."
+
+    - id: lab8 
+      title: "Creación de NodePools dedicados con reglas de afinidad"
+      url:  "/lab8/lab8/"
+      duration: "50 min"
+      desc: "Crea NodePools (critical/batch) con Karpenter y dirige workloads con affinity/anti-affinity y taints/tolerations, validando con kubectl."
+
+    - id: lab9 
+      title: "Aprovisionamiento de recursos en AWS con Crossplane desde EKS"
+      url:  "/lab9/lab9/"
+      duration: "60 min"
+      desc: "Aprovisiona S3 y SQS desde EKS con Crossplane + IRSA, listo para GitOps, validando SYNCED/READY y con troubleshooting kubectl/AWS."
+
+    - id: lab10 
+      title: "Implementación de GitOps avanzado con ArgoCD (multi-entorno)"
+      url:  "/lab10/lab10/"
+      duration: "60 min"
+      desc: "GitOps multi-entorno en EKS con Argo CD: Kustomize overlays, ApplicationSet/AppProject, auto-sync (prune/self-heal) y promoción por Git."
+
+    - id: lab11 
+      title: "Monitoreo y métricas de costos con herramientas OSS"
+      url:  "/lab11/lab11/"
+      duration: "60 min"
+      desc: "Observabilidad y costos en EKS con Prometheus+Grafana y OpenCost: costos por namespace/labels, PromQL y API /allocation, validando showback/chargeback."
+
+    - id: lab12 
+      title: "Configuración de un Service Mesh con Istio (canary release)"
+      url:  "/lab12/lab12/"
+      duration: "## min"
+      desc: "Canary release en EKS con Istio (sidecar): v1/v2, inyección automática, VirtualService/DestinationRule por pesos y validación con kubectl/istioctl."
+
+    - id: lab13 
+      title: "Implementación de escalado automático con KEDA (EKS)"
+      url:  "/lab13/lab13/"
+      duration: "60 min"
+      desc: "Escalado event-driven en EKS con KEDA y SQS (scale-to-zero), usando IRSA y ScaledObject/TriggerAuthentication, validado con kubectl."
+
+    - id: lab14 
+      title: "Configuración de despliegues con alta disponibilidad en EKS"
+      url:  "/lab14/lab14/"
+      duration: "60 min"
+      desc: "Despliega una app HA en EKS con réplicas, probes, spread multi-AZ, anti-affinity y PDB; valida con tráfico, rollout y drain con kubectl."
+
+    - id: lab15 
+      title: "Implementación de autenticación con IAM Roles for Service Accounts (IRSA)"
+      url:  "/lab15/lab15/"
+      duration: "75 min"
+      desc: "Configura IRSA en EKS para acceso mínimo a S3 con credenciales temporales (OIDC+STS), comparando Pods con/sin IRSA y validando con kubectl."
+
+    - id: lab16 
+      title: "Configuración avanzada de RBAC en EKS"
+      url:  "/lab16/lab16/"
+      duration: "60 min"
+      desc: "RBAC avanzado en EKS: roles por namespace (dev/prod), least privilege, separar log/exec, usar resourceNames y validar con kubectl auth can-i/impersonation."
+
+    - id: lab17 
+      title: "Hardening de Pods, Nodos y Secrets en EKS"
+      url:  "/lab17/lab17/"
+      duration: "60 min"
+      desc: "Hardening en EKS: PSA/securityContext restricted, protección de nodos/IMDS y manejo seguro de Secrets, validado con pruebas y troubleshooting CKAD."
+
+    - id: lab18 
+      title: "Integración de Istio para seguridad mTLS entre microservicios"
+      url:  "/lab18/lab18/"
+      duration: "75 min"
+      desc: "Implementa y valida mTLS en EKS con Istio (PERMISSIVE→STRICT), comparando tráfico con/sin sidecar y reforzando con AuthorizationPolicy y kubectl/istioctl."
+
+    - id: lab19 
+      title: "Monitoreo de consumo energético en EKS con Kepler"
+      url:  "/lab19/lab19/"
+      duration: "75 min"
+      desc: "Monitorea energía en EKS con Kepler + Prometheus/Grafana, generando carga para ver cambios en métricas y validar con troubleshooting."
+
+    - id: lab20 
+      title: "Implementación de políticas de ahorro energético"
+      url:  "/lab20/lab20/"
+      duration: "75 min"
+      desc: "Ahorro energético/costo en EKS: LimitRange/Quota, HPA con behavior anti-flapping, apagado programado con kube-green y (opcional) ASG schedule."
+
+    - id: lab21 
+      title: "Simulación de examen Kubernetes (reto estilo CKAD)"
+      url:  "/lab21/lab21/"
+      duration: "120 min"
+      desc: "Mini-examen CKAD en EKS: retos cronometrados (workloads, services, config, observabilidad, seguridad y networking) con evidencias en YAML."

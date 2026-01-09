@@ -1,0 +1,216 @@
+# EJEMPLO PARA LOS RESULTADOS ESPERADOS DE CADA TAREA DE CADA PRACTICA
+lab1:
+  results:
+    - "**Resultado esperado:** Estructura de carpetas creada y lista para comenzar el desarrollo."
+    - "**Resultado esperado:** Clúster EKS creado en **BASE_VER** con un Managed Node Group operativo, `kubectl` conectado y nodos listados correctamente. Queda listo para ejecutar el upgrade hacia **TARGET_VER**."
+    - "**Resultado esperado:** Los manifiestos del canario listos (Deployment/Service/PDB) aplicables sin errores; el diseño incluye réplicas + probes + PDB para tolerar mantenimientos"
+    - "**Resultado esperado:** Imagen publicada en ECR y canario desplegado con 3 réplicas, PDB activo y endpoint accesible por port-forward (prueba end-to-end)."
+    - "**Resultado esperado:** Control plane actualizado a `TARGET_VER` y API saludable (`/readyz` OK); el canario continúa corriendo mientras se completa el update."  
+    - "**Resultado esperado:** Nodegroup actualizado (rolling), nodos reemplazados gradualmente y canario permanece disponible gracias a probes + réplicas + PDB (sin downtime perceptible)."  
+    - "**Resultado esperado:** Add-ons actualizados y estado del sistema estable (`aws-node`, `coredns`, `kube-proxy` en ejecución), reduciendo riesgos post-upgrade."     
+    - "**Resultado esperado:** Recursos eliminados correctamente, el ambiente esta listo para el siguiente laboratorio." 
+lab2:
+  results:
+    - "**Resultado esperado:** Estructura de carpetas creada y lista para comenzar el desarrollo."
+    - "**Resultado esperado:** Clúster EKS creado y accesible por `kubectl`, con un Managed Node Group `ACTIVE` y nodos listados. El entorno queda listo para instalar Argo CD y ejecutar el flujo GitOps."
+    - "**Resultado esperado:** Acceso a EKS confirmado (kubectl apunta al clúster correcto), herramientas validadas, y variables base de AWS/ECR/Git listas para ejecutar el pipeline GitOps."
+    - "**Resultado esperado:** Imagen `v1` publicada en ECR y estructura GitOps lista (Kustomize base + overlay dev) renderizando correctamente con imagen ECR y 2 réplicas definidas por overlay."
+    - "**Resultado esperado:** Argo CD instalado en `argocd` con pods Running/Ready, despliegues con rollout exitoso y servicios creados correctamente."
+    - "**Resultado esperado:** Argo CD accesible por port-forward, password inicial recuperado, repo Git publicado y Application declarativa creada apuntando al overlay dev con auto-sync, prune y self-heal habilitados."
+    - "**Resultado esperado:** La app se despliega desde Git (v1), el drift manual (replicas=1) se corrige automáticamente (vuelve a 2), y al hacer commit con `newTag: v2`, Argo CD actualiza el deployment y la app responde con `Version: v2`."
+    - "**Resultado esperado:** Password inicial tratado (secret inicial eliminado) y ArgoCD desinstalado."
+    - "**Resultado esperado:** Recursos eliminados correctamente, el ambiente esta listo para el siguiente laboratorio."
+lab3:
+  results:
+    - "**Resultado esperado:** Estructura de carpetas creada y lista para comenzar el desarrollo."
+    - "**Resultado esperado:** Clúster EKS listo y accesible por `kubectl`, con nodos saludables y evidencia inicial guardada en `outputs/`."
+    - "**Resultado esperado:** Workspace listo, `kubectl` funcional contra EKS y baseline guardado para comparar síntomas/errores antes y después de los cambios."
+    - "**Resultado esperado:** El Deployment `web` queda inestable (reinicios) por liveness incorrecta; además quedan evidentes anti-patrones: imagen `:latest`, QoS BestEffort (por falta de recursos) y RBAC peligrosamente amplio (cluster-admin)."
+    - "**Resultado esperado:** Diagnóstico claro de causas: liveness mal configurada provoca reinicios, imagen `:latest` reduce reproducibilidad, ausencia de requests/limits produce QoS BestEffort y RBAC `cluster-admin` es excesivo (demostrado con `auth can-i`)."
+    - "**Resultado esperado:** Deployment estable con 2 réplicas Ready, sin reinicios por liveness; imagen versionada (sin `latest`), requests/limits definidos (QoS ya no BestEffort) y PDB presente para tolerar disrupciones planeadas."
+    - "**Resultado esperado:** RBAC reducido a mínimo (cluster-admin removido), ServiceAccount con automount deshabilitado, securityContext endurecido aplicado sin romper el rollout, PSA etiquetado"
+    - "**Resultado esperado:** Workload estable (pods Ready, rollout OK), PDB presente, eventos limpios, y controles de seguridad aplicados (sin cluster-admin binding, token automount deshabilitado)."
+    - "**Resultado esperado:** Laboratorio limpio (namespace eliminado) y, si aplica, clúster de laboratorio eliminado para evitar costos."
+lab4:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron las variables base, incluyendo la verificación de openssl para la generación de certificados."
+    - "**Resultado esperado:** Se creó (opcionalmente) un clúster EKS con Managed Node Group mediante eksctl y se validó estado ACTIVE del cluster y los nodos Ready desde AWS y kubectl."
+    - "**Resultado esperado:** Se instaló o verificó el AWS Load Balancer Controller con IRSA + Helm, confirmando ServiceAccount con role-arn, rollout exitoso y ausencia de errores críticos en logs."
+    - "**Resultado esperado:** Se generó un certificado TLS autofirmado con SAN wildcard para el dominio regional de ELB y se importó a AWS Certificate Manager (ACM), guardando el CERT_ARN y validando que el certificado quedó registrado como IMPORTED en la región del clúster."
+    - "**Resultado esperado:** Se desplegó la aplicación demo (Deployment + Service ClusterIP) en el namespace del lab, validando rollout, endpoints del Service y respuesta funcional mediante port-forward antes de exponerla por ALB."
+    - "**Resultado esperado:** Se creó el Ingress con annotations de ALB para listeners 80/443, redirect HTTP→HTTPS, adjuntando el certificado ACM importado y aplicando una SSL Policy; se esperó la provisión del ALB y se capturó el hostname (ALB_DNS) para pruebas sin DNS propio."
+    - "**Resultado esperado:** Se validó el comportamiento end-to-end: redirect HTTP→HTTPS, respuesta HTTPS (con -k o --cacert), inspección TLS con openssl y verificación en AWS de listeners 80/443, certificado adjunto y SSL policy aplicada usando AWS CLI."
+    - "**Resultado esperado:** Se limpiaron los recursos del laboratorio eliminando Ingress/ALB, aplicación y namespace, y opcionalmente el certificado ACM y el controller; se validó la eliminación para evitar costos residuales."
+lab5:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se validó el contexto correcto de AWS"
+    - "**Resultado esperado:** Se creó (opcionalmente) un clúster EKS con Managed Node Group mediante eksctl y se validó su estado desde kubectl y AWS."
+    - "**Resultado esperado:** Se construyó una imagen Docker de la app demo (endpoints /healthz y /readyz) y se publicó exitosamente en Amazon ECR (repo y push verificados)."
+    - "**Resultado esperado:** Se desplegó el escenario anti‑patrón: una livenessProbe mal calibrada que usa /readyz durante un arranque lento, provocando reinicios; se capturó evidencia con describe, events y restartCount."
+    - "**Resultado esperado:** Se corrigió el escenario con startupProbe, separando responsabilidades (startup/readiness en /readyz y liveness en /healthz); el Pod alcanzó Ready sin reinicios prematuros."
+    - "**Resultado esperado:** Se validó el comportamiento de readiness con 2 réplicas y Service: al forzar un Pod a NotReady, Kubernetes lo retiró de endpoints y el tráfico continuó desde el Pod sano."
+    - "**Resultado esperado:** Se ejecutó un checklist final tipo CKAD guardando evidencia de recursos, endpoints, eventos y logs para confirmar el comportamiento observado."
+    - "**Resultado esperado:** Se limpiaron los recursos del laboratorio eliminando el namespace (y opcionalmente el clúster/ECR), dejando el entorno sin cargas residuales."
+
+lab6:
+  results:
+    - "**Resultado esperado:** Workspace creado, variable definida y conectividad confirmada a AWS."
+    - "**Resultado esperado:** Clúster EKS de laboratorio creado con eksctl, kubeconfig actualizado y nodos en estado Ready."
+    - "**Resultado esperado:** Aplicación whoami desplegada con 2 pods Ready, Service creado, endpoints correctos y cliente curl listo para medición interna."
+    - "**Resultado esperado:** Chaos Mesh instalado con Helm; CRDs presentes y componentes (controller/daemon/dashboard) en estado Running/Ready. Dashboard accesible opcionalmente."
+    - "**Resultado esperado:** PodChaos ejecutado: un pod fue eliminado, el Deployment creó un reemplazo y el Service continuó respondiendo durante la recuperación."
+    - "**Resultado esperado:** NetworkChaos ejecutado: la latencia aumentó durante 60s (evidencia en curl) y volvió a valores normales al finalizar la duración."
+    - "**Resultado esperado:** StressChaos ejecutado: se observó degradación temporal (latencia mayor) durante 30s sin necesidad de caída total del servicio."
+    - "**Resultado esperado:** Checklist final completado: app responde, endpoints correctos, y evidencia (latencia/eventos) guardada en outputs/."
+    - "**Resultado esperado:** Laboratorio limpio: experimentos eliminados, namespace de la app borrado y Chaos Mesh desinstalado"
+lab7:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se cargaron variables desde .env y se validaron herramientas/identidad AWS para operar el clúster y Karpenter."
+    - "**Resultado esperado:** Se creó (opcionalmente) un clúster EKS con Managed Node Group mediante eksctl, se verificó estado ACTIVE y se asoció OIDC para habilitar IRSA."
+    - "**Resultado esperado:** kubectl quedó conectado al clúster EKS correcto y se validó conectividad listando el control plane y los nodos Ready."
+    - "**Resultado esperado:** Se prepararon prerrequisitos: (si aplicó) modo de autenticación para Access Entries, discovery tags en subnets/SG, stack CloudFormation de Karpenter (IAM+SQS) desplegado y Access Entry configurado/validado para el rol de nodos."
+    - "**Resultado esperado:** Karpenter se instaló con Helm (OCI) incluyendo CRDs, quedó corriendo en el namespace configurado y se validó IRSA (ServiceAccount anotado) y salud del deployment/logs."
+    - "**Resultado esperado:** Se crearon NodePool y EC2NodeClass con constraints (requirements), taint de aislamiento, límites de CPU y política de consolidación; se verificó discovery por tags y ausencia de errores en describe/events."
+    - "**Resultado esperado:** Se forzó scale-up con Pods Pending (requests altos + toleration), se observó creación de nodos/NodeClaims y se validó troubleshooting con describe/events/logs; luego se realizó scale-down a 0 y se observó consolidación/retiro de nodos."
+    - "**Resultado esperado:** e limpiaron los recursos del laboratorio (workload/namespace) y, opcionalmente, se removieron NodePool/NodeClass, Karpenter (charts) y el stack CloudFormation para evitar costos residuales."    
+lab8:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables en .env y se validaron herramientas e identidad AWS para operar EKS/Karpenter."
+    - "**Resultado esperado:** Se creó un clúster EKS con Managed Node Group mediante eksctl y se asoció OIDC provider para IRSA."
+    - "**Resultado esperado:** kubectl quedó conectado al clúster EKS correcto y se validó conectividad listando el control plane y los nodos Ready."
+    - "**Resultado esperado:** Se instaló y validó Karpenter de forma independiente: prerrequisitos (OIDC + discovery tags), bootstrap (CloudFormation IAM+SQS), Access Entry para el Node Role e instalación con Helm (CRDs y controller Ready con IRSA)."
+    - "**Resultado esperado:** Se creó/validó un EC2NodeClass funcional (default) y se definieron NodePools dedicados (critical/batch) con labels+taints NoSchedule y constraints de capacity-type, quedando listos para aprovisionamiento bajo demanda."
+    - "**Resultado esperado:** Se desplegaron workloads con nodeAffinity+tolerations hacia pools dedicated y un caso Pending intencional (afinidad sin toleration); se diagnosticó con describe/events y se corrigió con patch agregando la toleration."
+    - "**Resultado esperado:** Se aplicó podAntiAffinity required para distribuir réplicas por hostname; se observó Pending cuando faltaba capacidad y el scale-up de Karpenter para cumplir la regla, guardando evidencia de colocación y events."
+    - "**Resultado esperado:** Se generaron evidencias pods/nodos, labels y taints."
+    - "**Resultado esperado:** Se eliminó el namespace del demo y se removieron opcionalmente los NodePools dedicados, dejando el entorno listo para consolidación y evitando costos residuales."
+lab9:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables y se validó identidad AWS y región."
+    - "**Resultado esperado:** Se creó un clúster EKS con Managed Node Group mediante eksctl y se validó su estado desde kubectl y AWS (cluster ACTIVE y nodos Ready)."
+    - "**Resultado esperado:** Se instaló Crossplane mediante Helm en el namespace crossplane-system y se validó que los pods/controladores quedaron Running/Ready; además se verificó la disponibilidad del CRD DeploymentRuntimeConfig para el flujo IRSA."
+    - "**Resultado esperado:** Se instalaron los Providers de AWS para S3 y SQS (Upbound), quedando INSTALLED=True y HEALTHY=True, con CRDs disponibles para administrar Bucket/Queue y ProviderConfig."
+    - "**Resultado esperado:** Se configuró autenticación a AWS mediante IRSA: OIDC asociado, IAM Role con trust policy para ServiceAccounts del provider, runtime config aplicado para inyectar role-arn y ProviderConfig default creado usando source: IRSA; se verificó la anotación en los ServiceAccounts reales."
+    - "**Resultado esperado:** Se aprovisionaron recursos reales en AWS (S3 Bucket y SQS Queue) desde manifiestos Kubernetes usando Crossplane, se validaron condiciones SYNCED/READY y existencia con AWS CLI."
+    - "**Resultado esperado:** Se realizó limpieza eliminando los CRs para que Crossplane elimine los recursos externos, eliminación de Providers y desinstalación de Crossplane (y opcionalmente eliminación del clúster) para dejar el entorno sin componentes residuales."
+lab10:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables y se validó el contexto correcto de AWS y Kubernetes; Argo CD quedó verificado (pods/servicios/CRDs) y listo para operar."
+    - "**Resultado esperado:** Se construyó un repo GitOps con Kustomize (base + overlays dev/stage/prod) para una app whoami, validando render local con kubectl kustomize y publicando el commit inicial a main."
+    - "**Resultado esperado:** Se implementó AppProject (guardrails) restringiendo repo/destinos/recursos y se aplicó un root Application (bootstrap) para gestionar configuración Argo CD desde Git."
+    - "**Resultado esperado:** Se creó un ApplicationSet multi-entorno que generó 3 Applications (dev/stage/prod), creando namespaces automáticamente y desplegando recursos; se capturó evidencia de Sync/Health."
+    - "**Resultado esperado:** Se realizó promoción controlada por commits (dev → stage → prod), observando auto-sync en dev/stage y sync manual en prod; se provocó drift y se validó self-heal con evidencia en Argo y kubectl."
+    - "**Resultado esperado:** Se ejecutó checklist final tipo CKAD (apps/resources/events)"
+    - "**Resultado esperado:** Se realizó limpieza opcional eliminando Applications/ApplicationSet/Project y namespaces, dejando el clúster sin cargas residuales."
+lab11:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables en .env y se validó identidad AWS/CLIs para operar el clúster con reproducibilidad."
+    - "**Resultado esperado:** Se creó (opcional) un clúster EKS de laboratorio con eksctl y un Managed Node Group con capacidad suficiente para componentes de observabilidad/costos."
+    - "**Resultado esperado:** Se actualizó kubeconfig, se validó contexto, conectividad del control plane y estado base del clúster (nodos/pods/eventos) para evitar fallas previas."
+    - "**Resultado esperado:** Se instaló kube-prometheus-stack en el namespace monitoring con Prometheus Operator + Prometheus + Grafana; se validaron CRDs, pods listos y accesos locales por port-forward."
+    - "**Resultado esperado:** Se instaló OpenCost con Helm, configurándolo para usar Prometheus del stack e incluyendo ServiceMonitor para scraping; se validó UI/API y presencia de targets/métricas."
+    - "**Resultado esperado:** Se desplegaron workloads de prueba en 3 namespaces (team-a/b/c) con requests/limits y labels consistentes; se validaron rollouts y se capturó evidencia de labels/recursos."
+    - "**Resultado esperado:** Se consultaron costos por namespace y por label usando OpenCost UI, PromQL y la API /allocation, confirmando imputación y reforzando showback/chargeback con troubleshooting tipo CKAD."
+    - "**Resultado esperado:** Se realizó limpieza opcional eliminando workloads/namespaces y (si aplica) desinstalando OpenCost y kube-prometheus-stack o eliminando el clúster de lab, dejando el entorno sin cargas residuales."
+lab12:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables en .env y se validó el contexto correcto de AWS/EKS (kubeconfig), salud base del clúster y permisos RBAC para instalar Istio (CRDs/webhooks)."
+    - "**Resultado esperado:** Se creó un clúster EKS de laboratorio con eksctl y se validó su estado ACTIVE, NodeGroups y OIDC provider asociado."
+    - "**Resultado esperado:** Se descargó Istio y se configuró istioctl en el PATH; se instaló el control plane con perfil minimal y access logs del proxy; se validó istiod Ready, CRDs y webhooks, y se ejecutó istioctl analyze."
+    - "**Resultado esperado:** Se creó el namespace canary con inyección automática, se desplegó helloworld v1/v2 y el cliente curl, verificando sidecar injection, labels reales y conectividad interna al Service."
+    - "**Resultado esperado:** Se definieron subsets v1/v2 con DestinationRule y se aplicaron VirtualServices para traffic shifting (100/0, 90/10, 50/50, 0/100), validando existencia y consistencia con labels."
+    - "**Resultado esperado:** Se generó tráfico repetido desde curl y se comprobó la distribución por versión; se ejecutó troubleshooting tipo CKAD con eventos, validación de sidecar, estado del control plane, istioctl analyze/proxy-status y logs del proxy."
+    - "**Resultado esperado:** Se ejecutó checklist final"
+    - "**Resultado esperado:** Se limpiaron los recursos del laboratorio eliminando el namespace canary, Istio desinstalado, dejando el clúster sin cargas residuales."
+lab13:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables en .env y se validó el contexto correcto de AWS/EKS: identidad AWS, región."
+    - "**Resultado esperado:** Opcional: Se creó un clúster EKS con eksctl (Managed Node Group), se validó estado ACTIVE, NodeGroups, se asoció el OIDC provider para IRSA/controladores y kubeconfig actualizado, eventos baseline y permisos RBAC mínimos (namespaces/CRDs/clusterrole)."
+    - "**Resultado esperado:** Se instaló KEDA con Helm en el namespace keda y se validó que operator y metrics-apiserver quedaron disponibles; CRDs de KEDA presentes (ScaledObject/TriggerAuthentication)."
+    - "**Resultado esperado:** Se creó el namespace del lab, se creó una cola SQS y se configuró IRSA: IAM Policy mínima, OIDC provider asociado, ServiceAccount sqs-worker-sa con role-arn; validación práctica con pod AWS CLI consultando atributos de SQS."
+    - "**Resultado esperado:** Se construyó la imagen Docker del worker (boto3 + long polling SQS) y se publicó en Amazon ECR; verificación de repositorio e imagen en ECR."
+    - "**Resultado esperado:** Se desplegó el worker con replicas=0 y se configuró KEDA con TriggerAuthentication (pod identity) y ScaledObject para SQS; KEDA creó HPA y se validó escalado 0→N al enviar mensajes y N→0 al vaciar la cola, con evidencia en logs, describe y métricas SQS."
+    - "**Resultado esperado:** Se ejecutó un checklist final tipo CKAD (deploy/pods/HPA/KEDA objects/events/labels) y se guardaron variables clave en outputs/env.sh para limpieza reproducible."
+    - "**Resultado esperado:** Se limpiaron recursos del laboratorio: namespace, cola SQS, iamserviceaccount (rol/stack) y policy IAM; opcionalmente ECR y clúster, validando que no quedaron cargas residuales."
+lab14:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables."
+    - "**Resultado esperado:** Se creó un clúster EKS multi‑AZ con Managed Node Group vía eksctl (con verificación de zonas y labels de topología)."
+    - "**Resultado esperado:** Se desplegó la app base (Service + Deployment) con 3 réplicas, probes (readiness/liveness) y estrategia RollingUpdate (maxUnavailable/maxSurge); se validó disponibilidad con endpoints y un Pod curl interno."
+    - "**Resultado esperado:** Se aplicaron topology spread constraints (por AZ y por nodo) y pod anti‑affinity; se validó la distribución Pod→Node→Zone y se capturó evidencia para troubleshooting (describe/events)."
+    - "**Resultado esperado:** Se implementó PodDisruptionBudget (maxUnavailable=1) y graceful shutdown simulado con preStop; se validó Allowed disruptions y la configuración final del Deployment."
+    - "**Resultado esperado:** Se ejecutaron pruebas de resiliencia: tráfico continuo con tester, rolling update de imagen y drain de un nodo (cordon/drain/uncordon), validando que el servicio se mantiene disponible y que el PDB protege de disrupciones excesivas."
+    - "**Resultado esperado:** Se ejecutó un checklist final tipo CKAD guardando evidencia de Deployment/Service/Pods/endpoints/PDB y eventos."
+    - "**Resultado esperado:** Se limpiaron los recursos del laboratorio eliminando el namespace (y opcionalmente el clúster), dejando el entorno sin cargas residuales."
+lab15:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se definieron variables reutilizables (region/account/bucket/rol/policy) y se capturó evidencia de herramientas y de la identidad AWS (STS) en outputs/."
+    - "**Resultado esperado:** Se creó un clúster EKS para el laboratorio con eksctl (Managed Node Group), se actualizó kubeconfig, se validó el contexto actual, nodos Ready y se capturó baseline de eventos."
+    - "**Resultado esperado:** Se obtuvo el issuer OIDC del clúster, se verificó la existencia del IAM OIDC provider y, si faltaba, se asoció con eksctl (associate-iam-oidc-provider). Se validó su presencia en IAM."
+    - "**Resultado esperado:** Se creó el namespace del lab, un bucket S3 con bloqueo de acceso público, una policy IAM de mínimo privilegio restringida al bucket, y una ServiceAccount con IAM Role vía IRSA usando eksctl create iamserviceaccount. Se aplicó una bucket policy restringida a CALLER_ARN y al ROLE_ARN de IRSA."
+    - "**Resultado esperado:** Se desplegaron dos pods aws-cli (sleep) para pruebas comparables: uno sin IRSA (ServiceAccount default) y otro con IRSA (ServiceAccount anotada). Se validó que el pod sin IRSA recibe AccessDenied y que el pod con IRSA puede ejecutar sts get-caller-identity y operaciones S3 (cp/ls) exitosamente."
+    - "**Resultado esperado:** Se verificaron internals de IRSA dentro del pod (AWS_ROLE_ARN, AWS_WEB_IDENTITY_TOKEN_FILE, token proyectado), se ejecutó troubleshooting con describe/events y se documentaron fallos comunes."
+    - "**Resultado esperado:** Se ejecutó un checklist final estilo examen (get/describe/exec) dejando evidencia de recursos Kubernetes, STS identity dentro del pod con IRSA y objetos de prueba en S3."
+    - "**Resultado esperado:** Se limpiaron recursos (pods, iamserviceaccount/role, policy IAM, bucket S3, namespace) y opcionalmente se eliminó el clúster creado para el laboratorio."
+lab16:
+  results:
+    - "**Resultado esperado:** Se preparó el workspace, se creó la estructura estándar (k8s/rbac/outputs), se definieron variables base y se validaron versiones/herramientas, identidad AWS."
+    - "**Resultado esperado:** Se incluyeron pasos para NO asumir clúster existente: se intentó reutilizar kubeconfig si el clúster ya existía o se creó un clúster EKS con eksctl (Managed Node Group) y se validó conectividad con kubectl y prerequisitos de impersonation."
+    - "**Resultado esperado:** Se crearon los namespaces rbac-dev/rbac-prod y se desplegó una app demo (Deployment/Service) junto con ConfigMaps y Secrets para pruebas."
+    - "**Resultado esperado:** Se crearon ServiceAccounts por rol (CI/Observer/Debug/Config/ProdView) como identidades de prueba."
+    - "**Resultado esperado:** Se implementó RBAC por namespace con Roles/RoleBindings aplicando least privilege (deploy/logs/exec separados) en dev y read-only en prod."
+    - "**Resultado esperado:** Se validaron permisos con `kubectl auth can-i` usando impersonation, generando evidencia de pruebas positivas/negativas."
+    - "**Resultado esperado:** Se implementó RBAC avanzado: `resourceNames` para permitir patch/update solo a app-config y separación de subrecursos (`pods/log` vs `pods/exec`); se demostró Allowed/Forbidden con comandos reales y evidencia."
+    - "**Resultado esperado:** Se ejecutó un checklist final de troubleshooting (inventario/describe/yaml/events)."
+    - "**Resultado esperado:** Se limpiaron los recursos eliminando namespaces (y opcionalmente el clúster si fue creado para el laboratorio"
+lab17:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio en VS Code/GitBash y se validaron herramientas (aws/kubectl/eksctl) y variables base."
+    - "**Resultado esperado:** Se incluyeron pasos para NO asumir clúster existente: reutilizar kubeconfig si el clúster ya existía o crear un clúster EKS con eksctl (Managed Node Group) y validar conectividad."
+    - "**Resultado esperado:** Se confirmó el contexto del clúster y su salud (readyz/nodes/events) y se validaron permisos mínimos con kubectl auth can-i."
+    - "**Resultado esperado:** Se crearon los namespaces hardening-insecure y hardening-secure para separar pruebas y facilitar limpieza."
+    - "**Resultado esperado:** Se aplicaron labels de Pod Security Admission (restricted) al namespace hardening-secure y se verificó que quedaron activos."
+    - "**Resultado esperado:** Se ejecutó una prueba negativa: un Pod privilegiado/hostNetwork/capabilities fue rechazado por PSA; se capturaron eventos y salida como evidencia."
+    - "**Resultado esperado:** Se desplegó una app restricted (securityContext: non-root, no escalation, drop ALL, seccomp RuntimeDefault) y se validó acceso vía Service desde un Pod curl; se incluyó fix rápido si rootfs read-only causa problemas."
+    - "**Resultado esperado:** Se desplegó un Deployment sin hardening en el namespace seguro y se diagnosticó el bloqueo/errores de PSA con describe + events."
+    - "**Resultado esperado:** Se midió el baseline del riesgo IMDS ejecutando un Pod que intenta acceder a 169.254.169.254 y se guardó la salida para evaluación."
+    - "**Resultado esperado:** Se mapearon nodos a instancias EC2 y se validaron MetadataOptions (HttpTokens/HopLimit) para documentar la postura IMDS y mitigaciones recomendadas."
+    - "**Resultado esperado:** Se aplicó (opcional) una NetworkPolicy que permite egress a todo excepto IMDS y se re-probó IMDS para confirmar enforcement."
+    - "**Resultado esperado:** Se creó un Secret y se verificó su representación en base64 para reforzar que base64 no equivale a cifrado."
+    - "**Resultado esperado:** Se consumió el Secret montándolo como volumen read-only en un Pod restricted y se validó con logs/describe/events."
+    - "**Resultado esperado:** Se validó la configuración/estado de cifrado del clúster con aws eks describe-cluster"
+    - "**Resultado esperado:** Se limpiaron namespaces del laboratorio y el clúster."
+lab18:
+  results:
+    - "**Resultado esperado:** Se creó la estructura estándar del laboratorio, se definieron variables reutilizables (vars.env), se validaron herramientas (aws/kubectl/eksctl/curl) y se confirmó la identidad AWS."
+    - "**Resultado esperado:** Se validó conectividad a un clúster existente o se creó un clúster EKS con eksctl (Managed Node Group), se actualizó kubeconfig y se verificó estado del clúster/nodos y eventos baseline."
+    - "**Resultado esperado:** Se descargó Istio (istioctl + samples), se instaló el control plane con perfil default y se verificaron pods de istio-system, CRDs y análisis inicial con istioctl."
+    - "**Resultado esperado:** Se crearon 3 namespaces (2 con inyección y 1 legacy), se desplegaron httpbin/curl, se esperó readiness y se capturó evidencia de sidecar (istio-proxy) vs legacy sin sidecar."
+    - "**Resultado esperado:** Se ejecutó baseline de conectividad (HTTP codes) desde los 3 clientes hacia httpbin antes de aplicar políticas."
+    - "**Resultado esperado:** Se aplicó mTLS en mtls-demo (PERMISSIVE→STRICT) y una AuthorizationPolicy defensiva (DENY plaintext), validando que sidecars funcionan y el cliente legacy queda bloqueado con evidencia."
+    - "**Resultado esperado:** Se reforzó seguridad con AuthorizationPolicy de aislamiento por namespace (ALLOW solo desde mtls-demo) y se validó que other-demo queda denegado aun con sidecar."
+    - "**Resultado esperado:** Se realizó limpieza recomendada (namespaces del lab), y opcionalmente desinstalación de Istio y eliminación del clúster si fue creado solo para este laboratorio."
+lab19:
+  results:
+    - "**Resultado esperado:** Se preparó el workspace, se validaron herramientas (aws/kubectl/eksctl/helm/curl), se definieron variables base y se confirmó la identidad AWS, dejando evidencia reproducible en outputs/."
+    - "**Resultado esperado:** Se reutilizó o creó un clúster EKS (Managed Node Group Linux), se actualizó kubeconfig, se validaron nodos Ready y permisos RBAC para crear recursos del laboratorio."
+    - "**Resultado esperado:** Se instaló kube-prometheus-stack (Prometheus Operator + Prometheus + Grafana) en el namespace monitoring y se validaron pods/servicios, además de CRDs (ServiceMonitor/PodMonitor)."
+    - "**Resultado esperado:** Se instaló Kepler como DaemonSet en el namespace kepler con los privilegios necesarios y ServiceMonitor habilitado; se validó Ready por nodo y se capturaron logs para troubleshooting."
+    - "**Resultado esperado:** Se validó el endpoint /metrics de Kepler con port-forward + curl y se capturó una métrica real (kepler_*) para usarla en validaciones posteriores sin depender de nombres fijos."
+    - "**Resultado esperado:** Se verificó scraping/ingesta en Prometheus mediante port-forward y consultas a la API (series kepler_* con status=success), y se revisó targets como evidencia de descubrimiento."
+    - "**Resultado esperado:** Se desplegó un workload cpu-burn para generar carga controlada y se observaron cambios relativos con PromQL/consultas API (topk por consumo), guardando evidencia."
+    - "**Resultado esperado:** Opcionalmente, se accedió a Grafana por port-forward e importó un dashboard de Kepler para visualización."
+    - "**Resultado esperado:** Se ejecutó un checklist final estilo CKAD (inventario, eventos, logs)."
+    - "**Resultado esperado:** Se realizó limpieza eliminando namespaces del lab (y opcionalmente el clúster si fue exclusivo del laboratorio)."
+lab20:
+  results:
+    - "**Resultado esperado:** Se creó la estructura del laboratorio, se validaron herramientas (aws/kubectl/helm/curl) y se confirmó la identidad AWS, dejando variables reproducibles en outputs/vars.env."
+    - "**Resultado esperado:** Se validó la conectividad a un clúster existente o se creó un clúster EKS con eksctl (Managed Node Group), se actualizó kubeconfig y se verificó estado del clúster/nodos."
+    - "**Resultado esperado:** Se creó el namespace energy-dev con etiquetas de gobernanza y se desplegó la app base php-apache con requests/limits; se validó rollout y recursos (deploy/pods/service)."
+    - "**Resultado esperado:** Se aplicaron políticas de gobernanza (LimitRange + ResourceQuota) y se verificó enforcement con pruebas negativas (pod rechazado) y evidencia en describe/events; adicionalmente se comprobó inyección de defaults en un deployment sin recursos."
+    - "**Resultado esperado:** Se verificó/instaló Metrics Server, se creó un HPA autoscaling/v2 con behavior anti-flapping y se validó scale up/down con un generador de carga, capturando evidencia con top/describe/events."
+    - "**Resultado esperado:** Se instaló kube-green con Helm, se eliminó el HPA para permitir sleep a 0 réplicas y se aplicó un SleepInfo (timeZone CDMX) evidenciando sleep/wake con cambios de réplicas y logs del controlador."
+    - "**Resultado esperado:** Se configuró (opcional) escalado programado del ASG asociado al NodeGroup (scheduled actions con time-zone) y se validaron acciones y capacidad actual vía AWS CLI."
+    - "**Resultado esperado:** Se ejecutó un checklist final estilo (get all/events/top) capturando evidencia del estado final antes de limpieza de la infraestructura."
+    - "**Resultado esperado:** Se realizo la limpieza de los objetos de Kubernetes"
+    - "**Resultado esperado:** Se realizo la limpieza de los servicios de AWS ASG creados y el cluster de Amazon EKS"
