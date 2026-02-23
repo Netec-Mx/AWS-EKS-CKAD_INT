@@ -622,7 +622,8 @@ Instalarás Argo CD en el namespace `argocd` usando manifiestos oficiales “sta
   {: .lab-note .info .compact}
 
   ```bash
-  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubectl apply --server-side --force-conflicts -n argocd \
+  -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
   ```
 
 - {% include step_label.html %} Espera a que los componentes principales estén Ready.
